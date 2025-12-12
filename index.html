@@ -1,39 +1,269 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>Qianyun Gong</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Qianyun Gong | Personal Website</title>
     <style>
-        body {
-          font-family: Arial, sans-serif;
-          background: #f6f8fa;
-          text-align: center;
-          padding-top: 80px;
-        } 
-        img {
-          width: 120px;
-          border-radius: 50%;
+        :root{
+          --bg:#0b1220;
+          --card:#0f1a2b;
+          --text:#e6edf3;
+          --muted:#9fb0c0;
+          --line:rgba(255,255,255,.08);
+          --accent:#7dd3fc;
+          --accent2:#a78bfa;
+          --chip:rgba(255,255,255,.08);
+          --shadow: 0 12px 30px rgba(0,0,0,.25);
+          --radius:18px;
+          --max: 980px;
         }
-        h1 {
-          margin: 20px 0 10px;
+        *{box-sizing:border-box}
+        body{
+          margin:0;
+          font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+          background: radial-gradient(1200px 600px at 20% -10%, rgba(125,211,252,.25), transparent 60%),
+                      radial-gradient(1000px 500px at 90% 0%, rgba(167,139,250,.22), transparent 55%),
+                      var(--bg);
+          color:var(--text);
+          line-height:1.55;
         }
-        p {
-          color: #555;
+        a{color:var(--accent); text-decoration:none}
+        a:hover{text-decoration:underline}
+        .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 64px}
+        .top{
+          display:flex; gap:18px; align-items:center; justify-content:space-between;
+          padding:18px 18px;
+          border:1px solid var(--line);
+          border-radius:var(--radius);
+          background: rgba(255,255,255,.02);
+          box-shadow: var(--shadow);
         }
-        a {
-          margin: 0 10px;
-          text-decoration: none;
-          color: #0969da;
+        .left{display:flex; gap:16px; align-items:center}
+        .avatar{
+          width:74px; height:74px; border-radius:50%;
+          border:1px solid var(--line);
+          background: #111827;
+          object-fit:cover;
         }
+        .name{font-size:24px; font-weight:800; letter-spacing:.2px; margin:0}
+        .subtitle{margin:4px 0 0; color:var(--muted); font-size:14px}
+        .actions{display:flex; flex-wrap:wrap; gap:10px; justify-content:flex-end}
+        .btn{
+          display:inline-flex; align-items:center; gap:8px;
+          padding:10px 12px;
+          border-radius:999px;
+          border:1px solid var(--line);
+          background: rgba(255,255,255,.03);
+          color:var(--text);
+          text-decoration:none;
+          font-size:14px;
+        }
+        .btn:hover{background: rgba(255,255,255,.06); text-decoration:none}
+        .grid{
+          margin-top:18px;
+          display:grid;
+          grid-template-columns: 1fr;
+          gap:14px;
+        }
+        .card{
+          border:1px solid var(--line);
+          border-radius:var(--radius);
+          background: rgba(255,255,255,.02);
+          box-shadow: 0 10px 24px rgba(0,0,0,.18);
+          padding:18px;
+        }
+        .card h2{
+          margin:0 0 10px;
+          font-size:16px;
+          letter-spacing:.3px;
+          text-transform:uppercase;
+          color:#cfe6ff;
+        }
+        .item{padding:12px 0; border-top:1px solid var(--line)}
+        .item:first-of-type{border-top:none; padding-top:0}
+        .row{
+          display:flex; gap:10px; align-items:flex-start; justify-content:space-between;
+          flex-wrap:wrap;
+        }
+        .title{font-weight:700}
+        .meta{color:var(--muted); font-size:13px}
+        .bullets{margin:8px 0 0 18px; color:var(--text)}
+        .bullets li{margin:6px 0}
+        .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+        .chip{
+          padding:6px 10px;
+          border-radius:999px;
+          border:1px solid var(--line);
+          background: var(--chip);
+          color:var(--text);
+          font-size:13px;
+          white-space:nowrap;
+        }
+        .two{
+          display:grid;
+          grid-template-columns: 1.15fr .85fr;
+          gap:14px;
+        }
+        @media (max-width: 860px){
+          .top{flex-direction:column; align-items:flex-start}
+          .actions{justify-content:flex-start}
+          .two{grid-template-columns: 1fr}
+        }
+        footer{
+          margin-top:18px;
+          color:var(--muted);
+          font-size:13px;
+          text-align:center;
+          opacity:.9;
+        }
+        .tagline{
+          margin-top:10px;
+          color:var(--muted);
+          font-size:14px;
+        }
+        .small{font-size:13px; color:var(--muted)}
+        .hr{height:1px; background:var(--line); margin:12px 0 0}
     </style>
 </head>
+
 <body>
-<img src="assets/avatar.png" alt="avatar">
-<h1>Qianyun Gong</h1>
-<p>qianyungong@outlook.com｜(401) 910 7943  / linkedin.com/in/qianyungong</p>
-<!--<p>-->
-<!--    <a href="https://github.com/你的用户名">GitHub</a>-->
-<!--    <a href="mailto:your@email.com">Email</a>-->
-<!--</p>-->
-</body>
-</html>
+<div class="wrap">
+    <!-- Header -->
+    <section class="top">
+        <div class="left">
+            <!-- 把头像放到仓库 assets/avatar.png，或改成你自己的路径 -->
+            <img class="avatar" src="assets/avatar.png" alt="avatar" />
+            <div>
+                <h1 class="name">Qianyun Gong</h1>
+                <p class="subtitle">MSc CS (AI Pathway) @ Brown University · AI / Software Engineering</p>
+                <div class="tagline">Interested in AI applications, computer vision, and building reliable software systems.</div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <!-- 按需替换链接 -->
+            <a class="btn" href="mailto:1529793527@qq.com">Email</a>
+            <a class="btn" href="tel:+14019107943">Phone</a>
+            <a class="btn" href="https://www.linkedin.com/in/qianyungong" target="_blank" rel="noreferrer">LinkedIn</a>
+            <!-- 如果你有 GitHub 链接，替换下面这行 -->
+            <a class="btn" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
+            <!-- 如果你有简历 PDF，可替换为你的文件路径，比如 assets/Qianyun_Gong_CV.pdf -->
+            <!-- <a class="btn" href="assets/Qianyun_Gong_CV.pdf" target="_blank" rel="noreferrer">CV (PDF)</a> -->
+        </div>
+    </section>
+
+    <div class="grid two">
+        <!-- Left column -->
+        <section class="card">
+            <h2>Education</h2>
+
+            <div class="item">
+                <div class="row">
+                    <div class="title">Brown University</div>
+                    <div class="meta">09/2025 – 05/2027</div>
+                </div>
+                <div class="meta">M.S. in Computer Science · Pathway in Artificial Intelligence</div>
+            </div>
+
+            <div class="item">
+                <div class="row">
+                    <div class="title">University of Nottingham (UNUK) · University of Nottingham Ningbo China (UNNC)</div>
+                    <div class="meta">09/2021 – 06/2025</div>
+                </div>
+                <div class="meta">BSc (Hons) Computer Science with Artificial Intelligence · Dual-degree 2+2</div>
+                <div class="small">Weighted Average Score: 78/100 (3.8/4.0)</div>
+                <div class="chips">
+                    <span class="chip">Artificial Intelligence</span>
+                    <span class="chip">Computer Vision</span>
+                    <span class="chip">Operating Systems</span>
+                    <span class="chip">Software Engineering</span>
+                    <span class="chip">Data Structures</span>
+                    <span class="chip">Algorithms</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right column -->
+        <section class="card">
+            <h2>Skills</h2>
+
+            <div class="item">
+                <div class="title">Languages</div>
+                <div class="chips">
+                    <span class="chip">Mandarin (Native)</span>
+                    <span class="chip">English (Fluent)</span>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="title">Tech Stack</div>
+                <div class="chips">
+                    <span class="chip">Python</span>
+                    <span class="chip">Java</span>
+                    <span class="chip">C / C++</span>
+                    <span class="chip">HTML / CSS / JS</span>
+                    <span class="chip">Unity</span>
+                    <span class="chip">SQLite</span>
+                    <span class="chip">Git</span>
+                    <span class="chip">Java Swing</span>
+                    <span class="chip">JavaFX</span>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="title">Testing</div>
+                <div class="chips">
+                    <span class="chip">JUnit</span>
+                    <span class="chip">Functional Testing</span>
+                    <span class="chip">Integration Testing</span>
+                    <span class="chip">Regression</span>
+                    <span class="chip">Defect Tracking</span>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="title">Other</div>
+                <div class="chips">
+                    <span class="chip">Dance (Level 10)</span>
+                    <span class="chip">Photography (Amateur)</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <section class="card">
+        <h2>Internship</h2>
+        <div class="item">
+            <div class="row">
+                <div class="title">Huawei Technologies Co., Ltd. — Software Development Engineer Intern (AI-Assisted Learning)</div>
+                <div class="meta">07/2024 – 09/2024</div>
+            </div>
+            <ul class="bullets">
+                <li>Contributed to an internal AI-powered Q&A tool: knowledge governance, data import, and performance evaluation.</li>
+                <li>Compared two AI models to improve accuracy/recall and selected a more stable, accurate platform.</li>
+                <li>Identified and fixed knowledge corpus issues, improving response accuracy.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Projects</h2>
+
+        <div class="item">
+            <div class="row">
+                <div class="title">Android-Based Multi-Constraint Intelligent Scheduling for Amateur Sports Competitions</div>
+                <div class="meta">10/2024 – 05/2025</div>
+            </div>
+            <div class="meta">Individual Project · Supervisor: Dr. Dario Landa Silva</div>
+            <ul class="bullets">
+                <li>Built an Android app to generate match schedules under real-world constraints (venue, referee rotation, rest intervals, fairness).</li>
+                <li>Modeled the task as a multi-constraint optimization problem and applied metaheuristics to find feasible balanced schedules.</li>
+                <li>Used simulated annealing + heuristic refinement to improve fairness and reduce conflicts.</li>
+                <li>Implemented a UI for visualizing schedules and editing match assignments in real time.</li>
+            </ul>
+        </div>
+
+        <div class="item">
+            <div class="row">
+                <div class="title">Neural
