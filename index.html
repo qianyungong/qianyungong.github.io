@@ -25,6 +25,19 @@ body{
     radial-gradient(800px 400px at 90% 0%, rgba(167,139,250,.18), transparent 55%),
     var(--bg);
   color:var(--text);
+  line-height: 1.7;
+}
+
+p{
+  line-height: 1.75;
+}
+
+.bullets li{
+  line-height: 1.7;
+}
+
+.meta{
+  line-height: 1.6;
 }
 a{color:var(--accent); text-decoration:none}
 a:hover{text-decoration:underline}
@@ -130,6 +143,14 @@ footer{
     <!-- Hero Section -->
     <section class="hero">
       <div>
+        <img src="me.jpg" alt="Qianyun Gong" style="
+          width:120px;
+          height:120px;
+          border-radius:50%;
+          object-fit:cover;
+          border:1px solid rgba(255,255,255,.15);
+          margin-bottom:22px;
+        ">
         <h1>Hi, I’m <span>Qianyun Gong</span></h1>
         <p>
           MSc Computer Science (AI Pathway) at Brown University.
@@ -138,6 +159,7 @@ footer{
         </p>
         <div class="cta">
           <a class="btn primary" href="#projects">View Projects</a>
+          <a class="btn" href="cv.pdf" target="_blank" rel="noreferrer">Download CV</a>
           <a class="btn" href="mailto:qianyungong@outlook.com">Contact Me</a>
         </div>
       </div>
@@ -407,3 +429,5 @@ footer{
 </script>
 </body>
 </html>
+
+<!-- force rebuild -->
