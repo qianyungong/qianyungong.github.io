@@ -1,433 +1,604 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Qianyun Gong | Personal Website</title>
+    <title>Qianyun Gong | AI & Computer Science</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-:root{
-  --bg:#0a0f1f;
-  --panel:#0f172a;
-  --text:#e5e7eb;
-  --muted:#94a3b8;
-  --accent:#38bdf8;
-  --accent2:#a78bfa;
-  --border:rgba(255,255,255,.08);
-  --radius:18px;
-  --max:1050px;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-  background:
-    radial-gradient(900px 400px at 10% -10%, rgba(56,189,248,.15), transparent 60%),
-    radial-gradient(800px 400px at 90% 0%, rgba(167,139,250,.18), transparent 55%),
-    var(--bg);
-  color:var(--text);
-  line-height: 1.7;
-}
+        :root {
+            /* Palette - Deep Space Theme */
+            --bg: #0b1120;
+            --panel: rgba(30, 41, 59, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent-primary: #38bdf8; /* Sky Blue */
+            --accent-secondary: #818cf8; /* Indigo */
+            --highlight: #f472b6;
 
-p{
-  line-height: 1.75;
-}
+            --radius: 16px;
+            --max-width: 1000px;
+            --font-body: 'Inter', sans-serif;
+            --font-head: 'Outfit', sans-serif;
+        }
 
-.bullets li{
-  line-height: 1.7;
-}
+        * { box-sizing: border-box; }
 
-.meta{
-  line-height: 1.6;
-}
-a{color:var(--accent); text-decoration:none}
-a:hover{text-decoration:underline}
-.wrap{max-width:var(--max); margin:0 auto; padding:32px 20px 80px}
+        body {
+            margin: 0;
+            font-family: var(--font-body);
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-/* HERO */
-.hero{
-  min-height:60vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-}
-.hero h1{
-  font-size:clamp(36px,6vw,64px);
-  margin:0;
-  letter-spacing:.3px;
-}
-.hero span{
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-}
-.hero p{
-  max-width:720px;
-  margin:18px auto 28px;
-  color:var(--muted);
-  font-size:17px;
-}
-.hero .cta{
-  display:flex;
-  gap:14px;
-  justify-content:center;
-}
-.btn{
-  padding:12px 18px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.04);
-  color:var(--text);
-}
-.btn.primary{
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  color:#020617;
-  border:none;
-}
+        /* CANVAS BACKGROUND */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
 
-/* SECTIONS */
-section{margin-top:48px}
-.card{
-  background:rgba(255,255,255,.03);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:22px;
-}
-.card h2{
-  margin:0 0 14px;
-  font-size:15px;
-  letter-spacing:.25em;
-  text-transform:uppercase;
-  color:#c7d2fe;
-}
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:18px;
-}
-@media(max-width:900px){
-  .grid{grid-template-columns:1fr}
-}
+        a { color: var(--accent-primary); text-decoration: none; transition: 0.2s; }
+        a:hover { color: var(--accent-secondary); }
 
-/* LISTS */
-.item{padding:14px 0; border-top:1px solid var(--border)}
-.item:first-child{border-top:none}
-.title{font-weight:700}
-.meta{color:var(--muted); font-size:13px}
-.bullets{margin:8px 0 0 18px}
-.bullets li{margin:6px 0}
+        .wrap {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+            position: relative;
+            z-index: 1;
+        }
 
-/* CHIPS */
-.chips{display:flex; flex-wrap:wrap; gap:8px}
-.chip{
-  padding:6px 12px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.04);
-  font-size:13px;
-}
+        /* TYPOGRAPHY */
+        h1, h2, h3 { font-family: var(--font-head); margin-top: 0; }
 
-/* FOOTER */
-footer{
-  margin-top:64px;
-  text-align:center;
-  color:var(--muted);
-  font-size:13px;
-}
+        /* HERO SECTION */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 0;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .avatar {
+            width: 150px; height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(56, 189, 248, 0.3);
+            box-shadow: 0 0 40px rgba(56, 189, 248, 0.15);
+            margin-bottom: 28px;
+            background-color: #1e293b;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 6vw, 72px);
+            margin-bottom: 16px;
+            line-height: 1.1;
+            font-weight: 700;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 640px;
+            margin: 0 auto 32px;
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 36px;
+            font-size: 26px;
+        }
+        .social-links a { color: var(--text-muted); transition: transform 0.2s, color 0.2s; }
+        .social-links a:hover { color: var(--text-main); transform: translateY(-3px); }
+
+        .cta-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 15px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.03);
+            color: var(--text-main);
+            transition: all 0.2s ease;
+            backdrop-filter: blur(4px);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+            border-color: var(--text-main);
+        }
+
+        .btn.primary {
+            background: var(--text-main);
+            color: var(--bg);
+            border-color: var(--text-main);
+            font-weight: 600;
+        }
+        .btn.primary:hover {
+            background: #cbd5e1;
+        }
+
+        /* SECTIONS */
+        section { margin-bottom: 80px; scroll-margin-top: 100px; }
+
+        .card {
+            background: var(--panel);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, border-color 0.3s;
+        }
+
+        .card:hover {
+            border-color: rgba(56, 189, 248, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .card h2 {
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-secondary);
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 16px;
+        }
+
+        .card h2 i { font-size: 16px; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        /* LIST ITEMS */
+        .item {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .item:first-of-type { padding-top: 0; }
+        .item:last-child { border-bottom: none; padding-bottom: 0; }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .title { font-weight: 600; font-size: 1.1rem; color: var(--text-main); font-family: var(--font-head); }
+        .date { font-size: 0.9rem; color: var(--accent-secondary); font-family: var(--font-head); letter-spacing: 0.5px; opacity: 0.9; }
+        .subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 12px; display: block; }
+        .small-note { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; display: block; font-style: italic;}
+
+        /* BULLETS */
+        ul.bullets {
+            margin: 12px 0 0 0;
+            padding-left: 20px;
+            color: #cbd5e1;
+        }
+        ul.bullets li { margin-bottom: 8px; font-size: 0.95rem; }
+        ul.bullets li::marker { color: var(--accent-primary); }
+
+        /* CHIPS */
+        .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+        .chip {
+            padding: 5px 14px;
+            border-radius: 20px;
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid rgba(56, 189, 248, 0.15);
+            color: var(--accent-primary);
+            font-size: 12px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        .chip:hover {
+            background: rgba(56, 189, 248, 0.15);
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        /* ANIMATION */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 42px; }
+            .grid { grid-template-columns: 1fr; }
+            .card { padding: 24px; }
+            .row { flex-direction: column; gap: 2px; }
+            .title { margin-bottom: 2px; }
+            .date { font-size: 0.85rem; margin-bottom: 4px; }
+        }
     </style>
 </head>
 
 <body>
+
+<!-- Canvas Background -->
+<canvas id="bg-canvas"></canvas>
+
 <div class="wrap">
+
     <!-- Hero Section -->
-    <section class="hero">
-      <div>
-        <img src="me.jpg" alt="Qianyun Gong" style="
-          width:120px;
-          height:120px;
-          border-radius:50%;
-          object-fit:cover;
-          border:1px solid rgba(255,255,255,.15);
-          margin-bottom:22px;
-        ">
+    <header class="hero">
+        <!-- Placeholder Avatar - Replace 'me.jpg' with your real image locally -->
+        <img src="https://ui-avatars.com/api/?name=Qianyun+Gong&background=38bdf8&color=0f172a&size=256&bold=true"
+             alt="Qianyun Gong"
+             class="avatar"
+             onerror="this.style.display='none'">
+
         <h1>Hi, I’m <span>Qianyun Gong</span></h1>
+
         <p>
-          MSc Computer Science (AI Pathway) at Brown University.
-          I work on AI-driven systems, computer vision, and software engineering,
-          with a focus on building reliable and human-centered technology.
+            MSc Computer Science (AI Pathway) at <strong>Brown University</strong>.<br>
+            Building reliable, human-centered systems with Computer Vision & Software Engineering.
         </p>
-        <div class="cta">
-          <a class="btn primary" href="#projects">View Projects</a>
-          <a class="btn" href="cv.pdf" target="_blank" rel="noreferrer">Download CV</a>
-          <a class="btn" href="mailto:qianyungong@outlook.com">Contact Me</a>
+
+        <div class="social-links">
+            <a href="https://github.com/" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:qianyungong@outlook.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
         </div>
-      </div>
-    </section>
 
-    <section id="content">
+        <div class="cta-group">
+            <a class="btn primary" href="#projects">View Projects</a>
+            <a class="btn" href="cv.pdf" target="_blank">Download CV</a>
+        </div>
+    </header>
 
-    <div class="grid two">
-        <!-- Left column -->
+    <!-- Main Content -->
+    <main>
+
+        <!-- Education & Skills Grid -->
+        <div class="grid">
+
+            <!-- Education -->
+            <section class="card" id="education">
+                <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+
+                <div class="item">
+                    <div class="row">
+                        <div class="title">Brown University</div>
+                        <div class="date">09/2025 – 05/2027</div>
+                    </div>
+                    <span class="subtitle">M.S. in Computer Science (AI Pathway)</span>
+                    <span class="small-note">Providence, RI, USA</span>
+                </div>
+
+                <div class="item">
+                    <div class="row">
+                        <div class="title">University of Nottingham (UK & China)</div>
+                        <div class="date">09/2021 – 06/2025</div>
+                    </div>
+                    <span class="subtitle">BSc (Hons) Computer Science w/ AI</span>
+                    <span class="small-note">First Class Honors | GPA: 3.8/4.0</span>
+                    <div class="chips">
+                        <span class="chip">Computer Vision</span>
+                        <span class="chip">Operating Systems</span>
+                        <span class="chip">Data Structures</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Skills -->
+            <section class="card" id="skills">
+                <h2><i class="fas fa-code"></i> Technical Arsenal</h2>
+
+                <div class="item">
+                    <div class="title" style="font-size:0.95rem; margin-bottom:10px">Languages</div>
+                    <div class="chips" style="margin-top:0">
+                        <span class="chip">Python</span>
+                        <span class="chip">Java</span>
+                        <span class="chip">C / C++</span>
+                        <span class="chip">SQL</span>
+                        <span class="chip">Mandarin (Native)</span>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="title" style="font-size:0.95rem; margin-bottom:10px">Frameworks & Tools</div>
+                    <div class="chips" style="margin-top:0">
+                        <span class="chip">Unity</span>
+                        <span class="chip">OpenCV</span>
+                        <span class="chip">PyTorch</span>
+                        <span class="chip">Git</span>
+                        <span class="chip">JavaFX</span>
+                        <span class="chip">JUnit</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Internship -->
         <section class="card">
-            <h2>Education</h2>
-
+            <h2><i class="fas fa-briefcase"></i> Experience</h2>
             <div class="item">
                 <div class="row">
-                    <div class="title">Brown University</div>
-                    <div class="meta">09/2025 – 05/2027</div>
+                    <div class="title">Huawei Technologies Co., Ltd.</div>
+                    <div class="date">07/2024 – 09/2024</div>
                 </div>
-                <div class="meta">M.S. in Computer Science · Pathway in Artificial Intelligence</div>
-            </div>
-
-            <div class="item">
-                <div class="row">
-                    <div class="title">University of Nottingham (UNUK) · University of Nottingham Ningbo China (UNNC)</div>
-                    <div class="meta">09/2021 – 06/2025</div>
-                </div>
-                <div class="meta">BSc (Hons) Computer Science with Artificial Intelligence · Dual-degree 2+2</div>
-                <div class="small">Weighted Average Score: 78/100 (3.8/4.0)</div>
-                <div class="chips">
-                    <span class="chip">Artificial Intelligence</span>
-                    <span class="chip">Computer Vision</span>
-                    <span class="chip">Operating Systems</span>
-                    <span class="chip">Software Engineering</span>
-                    <span class="chip">Data Structures</span>
-                    <span class="chip">Algorithms</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Right column -->
-        <section class="card">
-            <h2>Skills</h2>
-
-            <div class="item">
-                <div class="title">Languages</div>
-                <div class="chips">
-                    <span class="chip">Mandarin (Native)</span>
-                    <span class="chip">English (Fluent)</span>
-                </div>
-            </div>
-
-            <div class="item">
-                <div class="title">Tech Stack</div>
-                <div class="chips">
-                    <span class="chip">Python</span>
-                    <span class="chip">Java</span>
-                    <span class="chip">C / C++</span>
-                    <span class="chip">HTML / CSS / JS</span>
-                    <span class="chip">Unity</span>
-                    <span class="chip">SQLite</span>
-                    <span class="chip">Git</span>
-                    <span class="chip">Java Swing</span>
-                    <span class="chip">JavaFX</span>
-                </div>
-            </div>
-
-            <div class="item">
-                <div class="title">Testing</div>
-                <div class="chips">
-                    <span class="chip">JUnit</span>
-                    <span class="chip">Functional Testing</span>
-                    <span class="chip">Integration Testing</span>
-                    <span class="chip">Regression</span>
-                    <span class="chip">Defect Tracking</span>
-                </div>
-            </div>
-
-            <div class="item">
-                <div class="title">Other</div>
-                <div class="chips">
-                    <span class="chip">Dance (Level 10)</span>
-                    <span class="chip">Photography (Amateur)</span>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <section class="card">
-        <h2>Internship</h2>
-        <div class="item">
-            <div class="row">
-                <div class="title">Huawei Technologies Co., Ltd. — Software Development Engineer Intern (AI-Assisted Learning)</div>
-                <div class="meta">07/2024 – 09/2024</div>
-            </div>
-            <ul class="bullets">
-                <li>Contributed to an internal AI-powered Q&A tool: knowledge governance, data import, and performance evaluation.</li>
-                <li>Compared two AI models to improve accuracy/recall and selected a more stable, accurate platform.</li>
-                <li>Identified and fixed knowledge corpus issues, improving response accuracy.</li>
-            </ul>
-        </div>
-    </section>
-
-    <section class="card">
-        <h2>Projects</h2>
-
-        <div class="item">
-            <div class="row">
-                <div class="title">Android-Based Multi-Constraint Intelligent Scheduling for Amateur Sports Competitions</div>
-                <div class="meta">10/2024 – 05/2025</div>
-            </div>
-            <div class="meta">Individual Project · Supervisor: Dr. Dario Landa Silva</div>
-            <ul class="bullets">
-                <li>Built an Android app to generate match schedules under real-world constraints (venue, referee rotation, rest intervals, fairness).</li>
-                <li>Modeled the task as a multi-constraint optimization problem and applied metaheuristics to find feasible balanced schedules.</li>
-                <li>Used simulated annealing + heuristic refinement to improve fairness and reduce conflicts.</li>
-                <li>Implemented a UI for visualizing schedules and editing match assignments in real time.</li>
-            </ul>
-        </div>
-
-        <div class="item">
-            <div class="row">
-                <div class="title">Neural VR World (Software Engineering Group Project) — Git Lead</div>
-                <div class="meta">10/2023 – 05/2024</div>
-            </div>
-            <div class="meta">Unity / VR · Supervisor: Dr. Horia Maior</div>
-            <ul class="bullets">
-                <li>Led GitLab branching, task assignment, and milestone management.</li>
-                <li>Developed VR environments in Unity; integrated VR headsets and brain scanner data visualization.</li>
-                <li>Implemented interactions (movie selection, volume, playback control) and teleportation across environments.</li>
-                <li>Conducted integration testing and produced project documentation.</li>
-            </ul>
-        </div>
-
-        <div class="item">
-            <div class="row">
-                <div class="title">The Segmentation of Flowers in OpenCV — Team Leader</div>
-                <div class="meta">02/2024 – 04/2024</div>
-            </div>
-            <ul class="bullets">
-                <li>Led a 5-person team to segment flower petals from noisy RGB images.</li>
-                <li>Implemented preprocessing (grayscale conversion, median/Gaussian denoising), Otsu thresholding, and morphology.</li>
-                <li>Tuned region growing, split&merge, watershed; selected watershed for best boundary accuracy.</li>
-                <li>Used Dice-based evaluation; achieved ~98% accuracy against ground truth.</li>
-            </ul>
-        </div>
-
-        <div class="item">
-            <div class="row">
-                <div class="title">Snake Game — Independent Developer</div>
-                <div class="meta">10/2023 – 12/2023</div>
-            </div>
-            <ul class="bullets">
-                <li>Built a Snake game with Maven; UI with JavaFX + Swing; multiple levels and AI-controlled enemies.</li>
-                <li>Implemented local score storage and real-time leaderboard display.</li>
-                <li>Added accessibility features (color-blind themes, voice prompts) and created JUnit tests.</li>
-            </ul>
-        </div>
-
-        <div class="item">
-            <div class="row">
-                <div class="title">Simulation Platform for Belief-Desire-Intention Agents — Front-End Team Leader</div>
-                <div class="meta">06/2023 – 08/2023</div>
-            </div>
-            <ul class="bullets">
-                <li>Led front-end development (Java Swing) for a BDI agent simulation platform with real-time state display.</li>
-                <li>Implemented step-by-step and timed auto-movement modes; iterated UI based on evolving requirements.</li>
-                <li>Ran weekly progress meetings to coordinate with the back-end team.</li>
-            </ul>
-        </div>
-
-        <div class="item">
-            <div class="row">
-                <div class="title">CNN-based Brain Tumour Segmentation Network — Computer Vision Team Member</div>
-                <div class="meta">07/2022 – 08/2022</div>
-            </div>
-            <ul class="bullets">
-                <li>Built data generators; performed splitting & augmentation (rotations, flips, brightness/contrast).</li>
-                <li>Worked with a MobileNetV2-based U-Net; Dice score loss; Adam optimizer; cross-validation evaluation.</li>
-                <li>Contributed to report & presentation; won Best Presentation Award and distinction grade.</li>
-            </ul>
-        </div>
-    </section>
-
-    <div class="grid two">
-        <section class="card">
-            <h2>Leadership & Activities</h2>
-
-            <div class="item">
-                <div class="row">
-                    <div class="title">Computer Psycho Union, UNNC — President</div>
-                    <div class="meta">09/2022 – 06/2023</div>
-                </div>
+                <span class="subtitle">Software Engineer Intern (AI-Assisted Learning)</span>
                 <ul class="bullets">
-                    <li>Managed ~40 members; led recruitment, interviews, and promotional events.</li>
-                    <li>Organized weekly educational activities with guest lectures; also delivered CS mini-lectures.</li>
-                    <li>Hosted a C programming competition; designed problems and trained 50+ participants.</li>
+                    <li>Engineered data import pipelines and governance strategies for an internal AI Q&A tool.</li>
+                    <li>Conducted comparative analysis of LLM models to improve recall rates and platform stability.</li>
+                    <li>Diagnosed and resolved knowledge corpus inconsistencies, directly boosting response accuracy.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section class="card" id="projects">
+            <h2><i class="fas fa-laptop-code"></i> Selected Projects</h2>
+
+            <div class="item">
+                <div class="row">
+                    <div class="title">Intelligent Sports Scheduling System</div>
+                    <div class="date">10/2024 – 05/2025</div>
+                </div>
+                <span class="subtitle">Android / Optimization Algorithms</span>
+                <ul class="bullets">
+                    <li>Developed an Android app solving multi-constraint scheduling problems (venues, referee rotation, fairness).</li>
+                    <li>Implemented <strong>Simulated Annealing</strong> and heuristic refinement to optimize match fairness.</li>
+                    <li>Created a real-time UI for visualizing conflicts and manual schedule adjustments.</li>
                 </ul>
             </div>
 
             <div class="item">
                 <div class="row">
-                    <div class="title">Science and Engineering Student Association, UNNC — Officer (Marketing)</div>
-                    <div class="meta">09/2021 – 06/2022</div>
+                    <div class="title">Neural VR World</div>
+                    <div class="date">10/2023 – 05/2024</div>
                 </div>
+                <span class="subtitle">Unity / VR / Git Lead</span>
                 <ul class="bullets">
-                    <li>Built partnerships with external businesses for funding and sponsorship.</li>
-                    <li>Supported planning and organizing large-scale events.</li>
+                    <li>Managed Git workflow (branching, milestones) for a team of 6 engineers.</li>
+                    <li>Integrated VR headset input with real-time brain scanner data visualization in Unity.</li>
+                    <li>Implemented teleportation mechanics and interactive media controls within the VR environment.</li>
                 </ul>
             </div>
 
             <div class="item">
                 <div class="row">
-                    <div class="title">Class Representative (UNUK / UNNC)</div>
-                    <div class="meta">09/2021 – Present</div>
+                    <div class="title">Flower Segmentation with OpenCV</div>
+                    <div class="date">02/2024 – 04/2024</div>
                 </div>
+                <span class="subtitle">Computer Vision / Team Lead</span>
                 <ul class="bullets">
-                    <li>Coordinated class participation in school events; acted as liaison between teachers and students.</li>
+                    <li>Led a team to segment flowers from noisy backgrounds using classic CV techniques.</li>
+                    <li>Evaluated Otsu thresholding, Region Growing, and Watershed algorithms; achieved <strong>98% Dice score</strong> with Watershed.</li>
+                </ul>
+            </div>
+
+            <div class="item">
+                <div class="row">
+                    <div class="title">Retro Snake Game</div>
+                    <div class="date">Independent</div>
+                </div>
+                <span class="subtitle">Java / JavaFX / Swing</span>
+                <ul class="bullets">
+                    <li>Built a full-featured game with AI enemies, local persistence, and accessibility themes.</li>
+                    <li>Implemented rigorous JUnit testing for game logic stability.</li>
                 </ul>
             </div>
         </section>
 
-        <section class="card">
-            <h2>Awards</h2>
+        <!-- Leadership & Awards Grid -->
+        <div class="grid">
+            <section class="card">
+                <h2><i class="fas fa-users"></i> Leadership</h2>
 
-            <div class="item">
-                <div class="row">
-                    <div class="title">International Collegiate Programming Contest (ICPC) — Team Member</div>
-                    <div class="meta">09/2023</div>
+                <div class="item">
+                    <div class="row">
+                        <div class="title">President</div>
+                        <div class="date">2022 – 2023</div>
+                    </div>
+                    <span class="subtitle">Computer Psycho Union, UNNC</span>
+                    <ul class="bullets">
+                        <li>Led a 40-person student org; organized C programming competitions and weekly tech lectures.</li>
+                    </ul>
                 </div>
-            </div>
 
-            <div class="item">
-                <div class="row">
-                    <div class="title">Best Presentation Award (CV/NLP Projects) — Imperial College London</div>
-                    <div class="meta">08/2022</div>
+                <div class="item">
+                    <div class="row">
+                        <div class="title">Class Representative</div>
+                        <div class="date">2021 – Present</div>
+                    </div>
+                    <span class="subtitle">UNUK / UNNC</span>
                 </div>
-            </div>
+            </section>
 
-            <div class="item">
-                <div class="row">
-                    <div class="title">3rd Prize — LEGO EV3 Robot Programming Competition (UNNC)</div>
-                    <div class="meta">11/2021</div>
+            <section class="card">
+                <h2><i class="fas fa-trophy"></i> Honors</h2>
+
+                <div class="item">
+                    <div class="row">
+                        <div class="title">Best Presentation Award</div>
+                        <div class="date">2022</div>
+                    </div>
+                    <span class="subtitle">Imperial College London (CV/NLP Summer School)</span>
                 </div>
-            </div>
 
-            <div class="item">
-                <div class="row">
-                    <div class="title">3rd Prize — Rubik’s Cube Competition (UNNC)</div>
-                    <div class="meta">11/2021</div>
+                <div class="item">
+                    <div class="row">
+                        <div class="title">ICPC Team Member</div>
+                        <div class="date">2023</div>
+                    </div>
+                    <span class="subtitle">International Collegiate Programming Contest</span>
                 </div>
-            </div>
 
-            <div class="hr"></div>
-            <p class="small" style="margin:12px 0 0">
-                Tip: 你可以把 GitHub/项目链接加在 Projects 每个项目标题下面（比如加一个 “Demo / Code” 按钮）。
-            </p>
-        </section>
-    </div>
+                <div class="item">
+                    <div class="row">
+                        <div class="title">3rd Prize</div>
+                        <div class="date">2021</div>
+                    </div>
+                    <span class="subtitle">LEGO EV3 Robot Programming Competition</span>
+                </div>
+            </section>
+        </div>
 
-    </section>
+    </main>
+
     <footer>
-        © <span id="y"></span> Qianyun Gong · Built with plain HTML/CSS · Hosted on GitHub Pages
+        <p>© <span id="year"></span> Qianyun Gong. Hosted on GitHub Pages.</p>
     </footer>
 </div>
 
+<!-- CANVAS ANIMATION SCRIPT -->
 <script>
-    document.getElementById("y").textContent = new Date().getFullYear();
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+
+    // Configuration
+    const particleCount = 60; // Adjust for density
+    const connectionDistance = 150;
+    const moveSpeed = 0.3;
+
+    function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+    }
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.vx = (Math.random() - 0.5) * moveSpeed;
+            this.vy = (Math.random() - 0.5) * moveSpeed;
+            this.size = Math.random() * 2 + 1;
+        }
+
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+
+            // Bounce off edges
+            if (this.x < 0 || this.x > width) this.vx *= -1;
+            if (this.y < 0 || this.y > height) this.vy *= -1;
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(56, 189, 248, 0.5)'; // Light blue
+            ctx.fill();
+        }
+    }
+
+    function initParticles() {
+        particles = [];
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, width, height);
+
+        // Update and draw particles
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+
+        // Draw connections
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < connectionDistance) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(129, 140, 248, ${1 - dist / connectionDistance})`; // Fade out
+                    ctx.lineWidth = 1;
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.stroke();
+                }
+            }
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    // Initialize
+    window.addEventListener('resize', resize);
+    resize();
+    initParticles();
+    animate();
+
+    // Footer Date
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Smooth Scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
 </script>
 </body>
 </html>
-
-<!-- force rebuild -->
