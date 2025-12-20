@@ -29,6 +29,7 @@
             --max-width: 1000px;
             --font-body: 'Inter', sans-serif;
             --font-head: 'Outfit', sans-serif;
+            --nav-height: 64px; /* Define nav height */
         }
 
         * { box-sizing: border-box; }
@@ -40,6 +41,7 @@
             color: var(--text-main);
             line-height: 1.6;
             overflow-x: hidden;
+            padding-top: var(--nav-height); /* Prevent content hiding behind nav */
         }
 
         /* CANVAS BACKGROUND */
@@ -51,6 +53,109 @@
             height: 100%;
             z-index: -1;
             pointer-events: none;
+        }
+
+        /* NAVIGATION BAR - NEW */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--nav-height);
+            background: rgba(11, 17, 32, 0.85); /* Slightly transparent dark bg */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-content {
+            width: 100%;
+            max-width: var(--max-width);
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-family: var(--font-head);
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: var(--text-main);
+            letter-spacing: 0.5px;
+            text-decoration: none;
+        }
+
+        .nav-brand span {
+            color: var(--accent-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            align-items: center; /* Center align items vertically */
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        /* Special style for icons in nav to make them slightly larger */
+        .nav-links i {
+            font-size: 1.1rem;
+        }
+
+        /* BACK TO TOP BUTTON (Bottom Right Style) */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 16px;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+
+            /* Hidden by default */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: var(--accent-primary);
+            color: #0f172a;
+            border-color: var(--accent-primary);
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
         }
 
         a { color: var(--accent-primary); text-decoration: none; transition: 0.2s; }
@@ -69,13 +174,13 @@
 
         /* HERO SECTION */
         .hero {
-            min-height: 85vh;
+            min-height: 80vh; /* Adjusted for nav */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 60px 0;
+            padding: 40px 0 60px;
             animation: fadeIn 1s ease-out;
         }
 
@@ -267,14 +372,40 @@
             .row { flex-direction: column; gap: 2px; }
             .title { margin-bottom: 2px; }
             .date { font-size: 0.85rem; margin-bottom: 4px; }
+
+            /* Mobile Nav: Just show name */
+            .nav-links { display: none; }
+            .nav-content { justify-content: center; }
         }
     </style>
 </head>
 
-<body>
+<body id="top">
 
 <!-- Canvas Background -->
 <canvas id="bg-canvas"></canvas>
+
+<!-- NAVIGATION BAR -->
+<nav class="navbar">
+    <div class="nav-content">
+        <a href="#top" class="nav-brand">Qianyun <span>Gong</span></a>
+
+        <div class="nav-links">
+            <a href="#education">Education</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="cv.pdf" target="_blank">Resume</a>
+            <!-- Added Social Links -->
+            <a href="https://github.com/GQYzzzz" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/qianyungong/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </div>
+</nav>
+
+<!-- Back to Top Button (Bottom Right) -->
+<a href="#top" class="back-to-top" aria-label="Back to Top">
+    <i class="fas fa-arrow-up"></i>
+</a>
 
 <div class="wrap">
 
@@ -395,7 +526,12 @@
             <h2><i class="fas fa-briefcase"></i> Experience</h2>
             <div class="item">
                 <div class="row">
-                    <div class="title">Huawei Technologies Co., Ltd.</div>
+                    <div class="title" style="display: flex; align-items: center; gap: 12px;">
+                        <img src="huawei_logo.jpg"
+                             alt="Huawei Logo"
+                             style="height: 30px; width: auto;">
+                        Huawei Technologies Co., Ltd.
+                    </div>
                     <div class="date">07/2024 – 09/2024</div>
                 </div>
                 <span class="subtitle">Software Engineer Intern (AI-Assisted Learning / LLM) | Wuhan, Hubei, China</span>
@@ -409,21 +545,36 @@
 
             <div class="item">
                 <div class="row">
-                    <div class="title">Imperial College London Research Project</div>
+                    <div class="title" style="display: flex; align-items: center; gap: 12px;">
+                        <img src="ic_logo.png"
+                             alt="IC Logo"
+                             style="height: 30px; width: auto;">
+                        Imperial College London Research Project
+                    </div>
                     <div class="date">07/2022 – 08/2022</div>
                 </div>
-                <span class="subtitle">CNN-based Brain Tumour Segmentation Network | London, UK<br>Computer Vision Team Member (Supervisor: Prof. Yike Guo) <br><em>Python / Computer Vision / Deep Learning / Tensorflow.keras</em></span>
+                <span class="subtitle">CNN-based Brain Tumor Segmentation Network | London, UK<br>Computer Vision Team Member (Supervisor: Prof. Yike Guo) <br><em>Python / Computer Vision / Deep Learning / Tensorflow.keras</em></span>
                 <ul class="bullets">
                     <li>Collaborated to classify and segment brain tumor using <strong>Numpy</strong> and <strong>Tensorflow</strong>.</li>
                     <li>Collaborated with the team to utilize a <strong>MobileNetV2-based U-Net</strong> model with <strong>Dice Score</strong> as the loss function, and to optimize the model using the <strong>Adam optimizer</strong>, contributing to the efficient and accurate segmentation of brain tumours in medical images.</li>
                     <li>Performed <strong>cross-validation</strong> to assess the model’s accuracy, achieving a segmentation accuracy of <strong>19% out of 20%</strong> and a model design score of 18% out of 20%</li>
                     <li>Contributed to the project report and presentations, winning the <strong>Best Presentation</strong> Award and a <strong>distinction</strong> grade.</li>
                 </ul>
+                <div class="chips">
+                    <a href="https://github.com/GQYzzzz/CNN-based-Brain-Tumour-Segmentation-Network" target="_blank" class="chip">
+                        <i class="fab fa-github"></i> View Detail
+                    </a>
+                </div>
             </div>
 
             <div class="item">
                 <div class="row">
-                    <div class="title">Undergraduate Research</div>
+                    <div class="title" style="display: flex; align-items: center; gap: 12px;">
+                        <img src="uon_logo.png"
+                             alt="UoN Logo"
+                             style="height: 32px; width: auto;">
+                        Undergraduate Research
+                    </div>
                     <div class="date">06/2023 – 08/2023</div>
                 </div>
                 <span class="subtitle">Simulation Platform for Belief-Desire-Intention Agents | University of Nottingham<br>Front-End Team Leader (Supervisor: Dr. Yuan Yao)<br> <em>Java / Java Swing / OOP</em></span>
@@ -432,6 +583,11 @@
                     <li>Implemented the front-end using Java Swing, and coordinated with the back-end team to ensure real-time data display.</li>
                     <li>Organized weekly progress meetings to promote effective communication and regularly optimized the front-end to meet evolving project requirements.</li>
                 </ul>
+                <div class="chips">
+                    <a href="https://github.com/GQYzzzz/Simulation-Platform-for-BDI-Agents" target="_blank" class="chip">
+                        <i class="fab fa-github"></i> View Detail
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -450,6 +606,11 @@
                     <li>Implemented <strong>Simulated Annealing</strong> and <strong>heuristic</strong> refinement to optimize match fairness.</li>
                     <li>Created a real-time App UI for visualizing conflicts and manual schedule adjustments.</li>
                 </ul>
+                <div class="chips">
+                    <a href="https://github.com/GQYzzzz/Android-Based-Multi-Constraint-Intelligent-Amateur-Sports-Scheduling" target="_blank" class="chip">
+                        <i class="fab fa-github"></i> View Detail
+                    </a>
+                </div>
             </div>
 
             <div class="item">
@@ -464,6 +625,11 @@
                     <li>Implemented user interaction controls and integrated features like movie selection, volume control, and playback adjustments in a VR cinema environment.</li>
                     <li>Coordinated the integration of multiple environments and implemented teleportation features.</li>
                 </ul>
+                <div class="chips">
+                    <a href="https://github.com/GQYzzzz/VR_Cinema_Unity" target="_blank" class="chip">
+                        <i class="fab fa-github"></i> View Detail
+                    </a>
+                </div>
             </div>
 
             <div class="item">
@@ -477,6 +643,11 @@
                     <li>Utilized Gaussian filtering, Otsu thresholding, dilation and erosion to refine edges and remove internal gaps</li>
                     <li>Tuned three segmentation methods (region growing, split and merge, and watershed), evaluated using a dice loss function, and achieved <strong>98% accuracy</strong> with Watershed.</li>
                 </ul>
+                <div class="chips">
+                    <a href="https://github.com/GQYzzzz/Segmentation-of-Flowers" target="_blank" class="chip">
+                        <i class="fab fa-github"></i> View Detail
+                    </a>
+                </div>
             </div>
 
             <div class="item">
@@ -491,6 +662,11 @@
                     <li>Designed the UI with accessibility features, including multiple colour themes for colour-blind users and voice prompts for visually impaired players.</li>
                     <li>Implemented rigorous JUnit testing for game logic stability.</li>
                 </ul>
+                <div class="chips">
+                    <a href="https://github.com/GQYzzzz/SnakeGame_withAIEnermyAndShooting" target="_blank" class="chip">
+                        <i class="fab fa-github"></i> View Detail
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -538,7 +714,7 @@
                         <div class="title">Best Presentation Award</div>
                         <div class="date">2022</div>
                     </div>
-                    <span class="subtitle">Imperial College London (CV/NLP Summer School)</span>
+                    <span class="subtitle">Imperial College London (CV/NLP Projects)</span>
                 </div>
 
                 <div class="item">
@@ -654,6 +830,17 @@
 
     // Footer Date
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Back to Top Logic
+    const backToTopBtn = document.querySelector('.back-to-top');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    });
 
     // Smooth Scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
